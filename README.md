@@ -1,6 +1,8 @@
 <div align="center">
 
+<div>
 <img src="assets/aesthetic_banner.jpeg" alt="BugBounty-recon" width="100%">
+</div>
 
 <p>
   <img src="https://img.shields.io/badge/Go-1.25+-00ADD8?logo=go&logoColor=white" alt="Go 1.25+">
