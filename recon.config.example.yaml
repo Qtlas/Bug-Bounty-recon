@@ -1,0 +1,51 @@
+# Example configuration. Copy to recon.config.yaml and edit for your target.
+#   cp recon.config.example.yaml recon.config.yaml
+#
+# Relative paths are resolved against the directory of THIS file, so the
+# binary can be launched from any working directory.
+
+scope:
+  domain: example.com
+  org_name: "Example Organization"   # optional, enables org-wide lookups
+
+wordlists:
+  dns: wordlists/dns.txt              # subdomain bruteforce list
+  web: wordlists/directories.txt      # directory bruteforce list
+  github_dorks: wordlists/dorks.txt   # GitHub dork patterns
+  permutations: ""                    # optional; empty = built-in prefix list
+
+resolvers: wordlists/resolvers.txt    # trusted DNS resolvers, one per line
+
+scan_profile: normal                  # stealth | normal | aggressive
+
+rate_limits:
+  default_threads: 50
+  default_rps: 0
+  default_timeout_minutes: 30         # budget per external command
+  per_module: {}                      # e.g. infra: { ptr_timeout_minutes: 4 }
+
+blocking_detection:
+  max_consecutive_403: 15
+  max_consecutive_429: 5
+  on_trigger: pause_and_reduce        # pause_and_reduce | abort | alert_only
+  pause_seconds: 60
+  reduce_factor: 0.5
+
+api_keys:
+  github_token: ""                    # GitHub source intel
+  shodan_api_key: ""                  # favicon-hash origin lookups
+  pdcp_api_key: ""                    # ProjectDiscovery Cloud (free), used by asnmap
+
+modules:
+  deep_passive: false                 # add slower passive sources
+  full_ports: false                   # full 65535-port scan instead of top ports
+  fast_dirbrute: false                # per-host fast directory bruteforce
+
+tool_paths:
+  # Absolute paths (or ~/… / $VAR). Empty = that step is skipped.
+  favup: ""                           # favicon-hash lookup helper script
+  hosthunter: ""                      # virtual-host discovery helper script
+  lazyegg: ""                         # JS analysis helper script
+  webanalyze_apps: ~/.config/webanalyze/technologies.json  # from `webanalyze -update`
+
+output_dir: targets/example.com/
